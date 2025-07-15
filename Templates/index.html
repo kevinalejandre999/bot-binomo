@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel del Bot de Trading</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: #00ff99;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ff99;
+      margin-bottom: 40px;
+    }
+
+    .panel {
+      background-color: #111;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #00ff99;
+      padding: 25px;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #ccc;
+    }
+
+    .value {
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+      margin-top: -20px;
+    }
+
+    .grid {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #111;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ff99;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #333;
+      padding: 10px;
+      text-align: center;
+      color: #eee;
+    }
+
+    th {
+      background-color: #1a1a1a;
+      color: #00ffcc;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .value {
+        margin-top: 5px;
+      }
+
+      .grid {
+        padding: 10px;
+      }
+
+      table, th, td {
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🤖 <strong>Panel del Bot de Trading</strong></h1>
+
+  <div class="panel">
+    <div class="row">
+      <div class="label">📥 Entrada actual:</div>
+      <div class="value" id="entrada">{{ data.entrada_actual }}</div>
+    </div>
+    <div class="row">
+      <div class="label">🏅 Ganancia actual:</div>
+      <div class="value" id="ganancia">{{ data.ganancia_actual }}</div>
+    </div>
+    <div class="row">
+      <div class="label">📉 Mayor entrada:</div>
+      <div class="value" id="mayor">{{ data.mayor_entrada }}</div>
+    </div>
+    <div class="row">
+      <div class="label">⏱ Tiempo de operación:</div>
+      <div class="value" id="tiempo">{{ data.tiempo_operacion }}</div>
+    </div>
+    <div class="row">
+      <div class="label">🎯 Stop Win buscado:</div>
+      <div class="value" id="stop">{{ data.stop_win_buscado }}</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Última actualización: {{ data.fecha_actualizacion }} </br></br> 
+  </div>
+
+  <div class="grid">
+    <h2 style="text-align:center; color:#00ffcc;">📊 Historial de Ganancias</h2>
+    <table id="tablaGanancias">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Ganancia</th>
+          <th>Mayor entrada</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for g in data.ganancias_dias %}
+        <tr>
+          <td>{{ g.fecha }}</td>
+          <td style="color:lime">
+            {{ g.ganancia }}
+          </td>
+
+          <td>{{ g.mayor_entrada }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    setInterval(() => {
+     location.reload();
+    }, 10000);
+  </script>
+
+</body>
+</html>
